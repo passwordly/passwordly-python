@@ -5,7 +5,7 @@ bcrypt_alphabet = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw
 
 def take(N, bignum):
   mod = bignum % N
-  bignum = bignum / N
+  bignum = bignum // N
   return (mod, bignum)
 
 def choice(letters, bignum):
@@ -17,11 +17,11 @@ def convertBase(result, alphabet):
   return sum([value[k] * len(alphabet)**k for k in range(len(value))])
 
 def generateSalt(password, site):
-  result = hmac.new(password, site)
+  result = hmac.new(password.encode('utf-8'), site.encode('utf-8'))
 
   bignum = 0
   for l in result.digest():
-    bignum = (bignum * 256) + ord(l)
+    bignum = (bignum * 256) + l
 
   salt = ''
   for k in range(22):
